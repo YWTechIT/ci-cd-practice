@@ -8,7 +8,7 @@ on: # 어떤 경우에 동작하는지?
     
 jobs:  # 독립적인 실행
   test-and-deploy: 
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     
     steps: 
     # 가장 먼저, 저장소에 있는 파일을 가져오도록 해야 함. -> checkout
