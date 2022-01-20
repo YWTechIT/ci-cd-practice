@@ -1,0 +1,33 @@
+name: Elice-CI CD
+
+on: # 어떤 경우에 동작하는지?
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    
+jobs:  # 독립적인 실행
+  test-and-deploy: 
+    runs-on: ubuntu-lastest
+    
+    steps: 
+    # 가장 먼저, 저장소에 있는 파일을 가져오도록 해야 함. -> checkout
+    # Node.js를 다운 받아야 함. (버전을 지정해서)
+    # 의존성 다운받기 (npm ci)  
+    # 테스트를 돌려서 확인하기
+    # 배포 돌리기
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run test
+        run: npm test
+      - name: Deploy to Heroku
+        uses: AkhileshNS/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email: "ywtechit@gmail.com"
+          heroku_app_name: "elice-ci-test"
